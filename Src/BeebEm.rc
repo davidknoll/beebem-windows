@@ -717,6 +717,7 @@ BEGIN
         MENUITEM "Floppy Drive On/Off",         ID_FLOPPYDRIVE
         MENUITEM "SCSI Hard Drive On/Off",      ID_HARDDRIVE
         MENUITEM "IDE Hard Drive On/Off",       ID_IDEDRIVE
+        MENUITEM "IDE Host Passthru On/Off",    ID_IDEPASSTHRU
         MENUITEM "User Port Breakout Box",      ID_BREAKOUT
         MENUITEM "User Port RTC Module",        ID_UPRM
         MENUITEM "Master 128 RTC Y2K Adjust",   ID_RTCY2KADJUST

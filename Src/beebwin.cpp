@@ -28,6 +28,7 @@ Boston, MA  02110-1301, USA.
 // 11/01/1998: Conveted to use DirectX, Mike Wyatt
 // 28/12/2004: Econet added Rob O'Donnell. robert@irrelevant.com.
 // 26/12/2011: Added IDE Drive to Hardware options, JGH
+// 24/02/2018: Added 16-bit IDE host passthru, David Knoll
 
 #include <stdio.h>
 #include <windows.h>
@@ -60,6 +61,7 @@ Boston, MA  02110-1301, USA.
 #include "scsi.h"
 #include "sasi.h"
 #include "ide.h"
+#include "idepassthru.h"
 #include "z80mem.h"
 #include "z80.h"
 #include "userkybd.h"
@@ -506,6 +508,7 @@ void BeebWin::ResetBeebSystem(Model NewModelType, bool TubeStatus, bool LoadRoms
 	if (SCSIDriveEnabled) SCSIReset();
 	if (SCSIDriveEnabled) SASIReset();
 	if (IDEDriveEnabled)  IDEReset();
+	if (IDEPassThruEnabled) PTReset();
 	TeleTextInit();
 	if (MachineType == Model::Master128) {
 		InvertTR00 = false;
@@ -923,6 +926,7 @@ void BeebWin::InitMenu(void)
 	CheckMenuItem(ID_FLOPPYDRIVE, Disc8271Enabled);
 	CheckMenuItem(ID_HARDDRIVE, SCSIDriveEnabled);
 	CheckMenuItem(ID_IDEDRIVE, IDEDriveEnabled);
+	CheckMenuItem(ID_IDEPASSTHRU, IDEPassThruEnabled);
 	CheckMenuItem(ID_UPRM, RTC_Enabled);
 	CheckMenuItem(ID_RTCY2KADJUST, RTCY2KAdjust);
 
@@ -1424,6 +1428,7 @@ LRESULT CALLBACK WndProc(
 							if (SCSIDriveEnabled) SCSIReset();
 							if (SCSIDriveEnabled) SASIReset();
 							if (IDEDriveEnabled)  IDEReset();
+							if (IDEPassThruEnabled) PTReset();
 							TeleTextInit();
 							//SoundChipReset();
 							Music5000Reset();
@@ -3654,6 +3659,8 @@ void BeebWin::HandleCommand(int MenuId)
 		if (SCSIDriveEnabled) {
 			IDEDriveEnabled = false;
 			CheckMenuItem(ID_IDEDRIVE, IDEDriveEnabled);
+			IDEPassThruEnabled = false;
+			CheckMenuItem(ID_IDEPASSTHRU, IDEPassThruEnabled);
 		}
 		break;
 
@@ -3664,6 +3671,20 @@ void BeebWin::HandleCommand(int MenuId)
 		if (IDEDriveEnabled) {
 			SCSIDriveEnabled = false;
 			CheckMenuItem(ID_HARDDRIVE, SCSIDriveEnabled);
+			IDEPassThruEnabled = false;
+			CheckMenuItem(ID_IDEPASSTHRU, IDEPassThruEnabled);
+		}
+		break;
+
+	case ID_IDEPASSTHRU:
+		IDEPassThruEnabled = !IDEPassThruEnabled;
+		PTReset();
+		CheckMenuItem(ID_IDEPASSTHRU, IDEPassThruEnabled);
+		if (IDEPassThruEnabled) {
+			SCSIDriveEnabled = false;
+			CheckMenuItem(ID_HARDDRIVE, SCSIDriveEnabled);
+			IDEDriveEnabled = false;
+			CheckMenuItem(ID_IDEDRIVE, IDEDriveEnabled);
 		}
 		break;
 

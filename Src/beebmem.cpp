@@ -25,6 +25,7 @@ Boston, MA  02110-1301, USA.
 // Beebemulator - memory subsystem - David Alan Gilbert 16/10/1994
 // Econet emulation: Rob O'Donnell robert@irrelevant.com 28/12/2004
 // IDE Interface: JGH jgh@mdfs.net 25/12/2011
+// 16-bit IDE host passthru: David Knoll 24/02/2018
 
 #ifdef WIN32
 #include <windows.h>
@@ -52,6 +53,7 @@ Boston, MA  02110-1301, USA.
 #include "scsi.h"
 #include "sasi.h"
 #include "ide.h"
+#include "idepassthru.h"
 #include "uefstate.h"
 #include "z80mem.h"
 #include "z80.h"
@@ -542,6 +544,10 @@ int BeebReadMem(int Address) {
 		if (IDEDriveEnabled)  return(IDERead(Address & 0x7));
 	}
 
+	if ((Address & ~0xf)==0xfc40) {
+		if (IDEPassThruEnabled) return(PTRead(Address & 0xf));
+	}
+
 	if ((Address & ~0x1)==0xfc50) {
 		return(mainWin->PasteKey(Address & 0x1));
 	}
@@ -1006,6 +1012,13 @@ void BeebWriteMem(int Address, unsigned char Value) {
 	if ((Address & ~0x7)==0xfc40) {
 		if (IDEDriveEnabled) {
 			IDEWrite((Address & 0x7),Value);
+			return;
+		}
+	}
+
+	if ((Address & ~0xf)==0xfc40) {
+		if (IDEPassThruEnabled) {
+			PTWrite((Address & 0xf),Value);
 			return;
 		}
 	}

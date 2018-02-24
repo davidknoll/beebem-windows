@@ -52,6 +52,7 @@ Boston, MA  02110-1301, USA.
 #include "econet.h"
 #include "scsi.h"
 #include "ide.h"
+#include "idepassthru.h"
 #include "debug.h"
 #include "Arm.h"
 #include "sprowcopro.h"

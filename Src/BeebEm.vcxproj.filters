@@ -84,6 +84,9 @@
     <ClCompile Include="ide.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="idepassthru.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -225,6 +228,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ide.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="idepassthru.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="log.h">
