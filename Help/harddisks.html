@@ -92,15 +92,25 @@ configure the size of the hard disk image.  Bytes in the scsi?.dsc file used
 by BeebEm (with offsets starting at 0):</p>
 
 <ul>
-<li>Byte offset 13 = number of cyclinders (high byte)</li>
-<li>Byte offset 14 = number of cyclinders (low byte)</li>
+<li>Byte offset 13 = number of cylinders (high byte)</li>
+<li>Byte offset 14 = number of cylinders (low byte)</li>
 <li>Byte offset 15 = number of heads</li>
 </ul>
 
 <p>The number of 256 byte sectors in the hard disk image is calculated
 as:</p>
 
-<p>Sectors = heads * (cyclinders high byte * 256 + cyclinders low byte) * 33</p>
+<p>Sectors = heads * (cylinders high byte * 256 + cylinders low byte) * 33</p>
+
+<p>There is also the option to passthrough the IDE interface to the host.
+This is configured to emulate J.G.Harston's 16-bit interface, using the
+secondary IDE channel on your machine. The main intention was to allow
+development of software that uses CD-ROM drives.</p>
+
+<p>This feature uses a driver called InpOut32. It may require running as
+administrator to set up or for the first use. Because it accesses raw I/O
+ports on a level below the host OS, the drives on this channel (but not the
+controller) should be disabled in Device Manager to avoid conflicts.</p>
 
       <!-- End of content -->
       </td>

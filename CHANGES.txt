@@ -2,7 +2,7 @@ BeebEm Change History
 =====================
 
 Version 4.15 (Charles Reilly, Chris Needham, Kieran Mockford, pstnotpd,
-Richard Broadhurst, J.G.Harston, Mike Wyatt, Alistair Cree)
+Richard Broadhurst, J.G.Harston, Mike Wyatt, Alistair Cree, David Knoll)
 ------------
 * Fixed 320x256 screen capture.
 * Enabled DirectX full screen display at current desktop screen resolution.
@@ -32,6 +32,7 @@ Richard Broadhurst, J.G.Harston, Mike Wyatt, Alistair Cree)
 * General sound emulation improvements.
 * Fixed graphics hold in teletext mode.
 * Release Shift key on disk read after auto-booting.
+* Added passthrough to host IDE interface using InpOut32.
 
 Version 4.14 (J.G.Harston, Steve Pick, Mike Wyatt)
 ------------
