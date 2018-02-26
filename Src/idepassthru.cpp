@@ -3,9 +3,9 @@
 #include <windows.h>
 #include "idepassthru.h"
 
-static void (*pOut32)(short, short);
-static short (*pInp32)(short);
-static bool (*pIsInpOutDriverOpen)(void);
+static void (__stdcall *pOut32)(short, short);
+static short (__stdcall *pInp32)(short);
+static BOOL (__stdcall *pIsInpOutDriverOpen)(void);
 
 bool IDEPassThruEnabled = false;
 static int inlatch, outlatch;
@@ -57,8 +57,8 @@ void PTReset(void)
 {
 	HINSTANCE hInpOutDll = LoadLibrary("inpout32.dll");
 	if (hInpOutDll) {
-		pOut32 = (void (*)(short, short)) GetProcAddress(hInpOutDll, "Out32");
-		pInp32 = (short (*)(short)) GetProcAddress(hInpOutDll, "Inp32");
-		pIsInpOutDriverOpen = (bool (*)(void)) GetProcAddress(hInpOutDll, "IsInpOutDriverOpen");
+		pOut32 = (void (__stdcall *)(short, short)) GetProcAddress(hInpOutDll, "Out32");
+		pInp32 = (short (__stdcall *)(short)) GetProcAddress(hInpOutDll, "Inp32");
+		pIsInpOutDriverOpen = (BOOL (__stdcall *)(void)) GetProcAddress(hInpOutDll, "IsInpOutDriverOpen");
 	}
 }
